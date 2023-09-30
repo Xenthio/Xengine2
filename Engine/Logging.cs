@@ -7,23 +7,23 @@ public static class Log
 {
     public static void Info(string message) 
     {
-        LogMessage(message, LogSeverity.Info);
+        LogMessage(message, LogSeverity.Info, Assembly.GetCallingAssembly());
     }
     public static void Warning(string message) 
     {
-        LogMessage(message, LogSeverity.Warning);
+        LogMessage(message, LogSeverity.Warning, Assembly.GetCallingAssembly());
     }
     public static void Error(string message) 
     {
-        LogMessage(message, LogSeverity.Error);
+        LogMessage(message, LogSeverity.Error, Assembly.GetCallingAssembly());
     }
 
-    static void LogMessage(string message, LogSeverity severity)
+    static void LogMessage(string message, LogSeverity severity, Assembly CallingAssembly)
     { 
-        string CallingAssembly = Assembly.GetCallingAssembly().GetName().Name ?? "Unknown";
+        string CallingAssemblyName = CallingAssembly.GetName().Name ?? "Unknown";
         string SeverityLevel = severity.ToString();
 
-        Console.WriteLine($"[{CallingAssembly}] [{SeverityLevel}]: {message}");
+        Console.WriteLine($"[{CallingAssemblyName}] [{SeverityLevel}]: {message}");
     }
 
     enum LogSeverity {

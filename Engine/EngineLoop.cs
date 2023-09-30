@@ -1,16 +1,19 @@
 using System.ComponentModel;
 using System.Reflection;
+using Engine;
+using Render;
 
 namespace Engine;
 
-public partial class Xengine 
+public static partial class Xengine 
 {
-    public bool DoEngineLoop = true;
-    public int TicksPerSecond = 64;
-    TimeSince TimeSinceTick = 0;
-    public Assembly GameAssembly;
-    public IGame GameManager;
-    public void GameInitialise(string assemblyName) {
+    public static GameRenderer RenderInstance = new();
+    public static bool DoEngineLoop = true;
+    public static int TicksPerSecond = 64;
+    static TimeSince TimeSinceTick = 0;
+    public static Assembly GameAssembly;
+    public static IGame GameManager;
+    public static void GameInitialise(string assemblyName) {
 
         GameAssembly = Assembly.Load(assemblyName);
 
@@ -27,20 +30,57 @@ public partial class Xengine
         }
         GameManager.Initialise();
     }
-    public void EngineLoop() 
-    {
-        while (DoEngineLoop) 
-        {
-            GameManager.BuildInput();
-            if (TimeSinceTick > TicksPerSecond/1f) {
-                TimeSinceTick = 0;
-                GameManager.Tick();
-            }
 
-            //Do Render Shite
-            GameManager.Frame();
+    public static void BindGameEvents() {
+        foreach (var type in GameAssembly.GetTypes()) 
+        {
+            foreach (var method in type.GetMethods())
+            {
+                if (method.CustomAttributes.Any(a => a.AttributeType == typeof(GameEvent.Frame))) {
+                    FrameEvents += (Action) Delegate.CreateDelegate(typeof(Action), method);
+                }
+                if (method.CustomAttributes.Any(a => a.AttributeType == typeof(GameEvent.Input))) {
+                    InputEvents += (Action) Delegate.CreateDelegate(typeof(Action), method);
+                }
+                if (method.CustomAttributes.Any(a => a.AttributeType == typeof(GameEvent.Tick))) {
+                    TickEvents += (Action) Delegate.CreateDelegate(typeof(Action), method);
+                }
+            }
         }
     }
 
+    public static void SetupInput() 
+    {
+        Xengine.RenderInstance.InitialiseInput();
+        Input.SetupInput();
+    }
+
+    static Action FrameEvents;
+
+    static Action InputEvents;
+
+    static Action TickEvents;
+    static public void OnFrame(double deltaTime) 
+    {
+        //Do Render Shite
+        FrameEvents?.Invoke();
+        GameManager.Frame();
+    }
+    static public void OnTick(double deltaTime)
+    {
+        TickEvents?.Invoke();
+        GameManager.Tick();
+    }
+    static public void OnInput()
+    {
+        InputEvents?.Invoke();
+        GameManager.BuildInput();
+    }
+
+    static public void OnLoad()
+    {
+        // Setup Input
+        SetupInput();
+    }
     
 }

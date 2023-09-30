@@ -1,25 +1,30 @@
 ﻿using Engine;
 using System;
 using Render;
+using Silk.NET.Input;
 
 internal class Launcher 
 {
-    public static Xengine EngineInstance = new();
-    
-    public static Renderer RenderInstance = new();
     public static void Main(string[] args) 
     {
         Log.Info("Xengine started!");
 
-        // Load game assembly
-        EngineInstance.GameInitialise("Game");
         // init render
-        RenderInstance.InitialiseWindow("Game");
-        RenderInstance.InitialiseRenderContext();
-
+        Xengine.RenderInstance.InitialiseWindow("Game");
         
-        // Run engine loop
-        EngineInstance.EngineLoop();
+        // Load game assembly
+        Xengine.GameInitialise("Game");
+        Xengine.BindGameEvents();
+        //Xengine.RenderInstance.GameWindow.UpdatesPerSecond = Xengine.TicksPerSecond;
+
+        // Setup Engine loop
+        Xengine.RenderInstance.GameWindow.Render += Xengine.OnFrame;
+        Xengine.RenderInstance.GameWindow.Update += Xengine.OnTick;
+        Xengine.RenderInstance.GameWindow.Load += Xengine.OnLoad;
+
+        // Swap to loop
+        Log.Info("Switching to Engine Loop...");
+        Xengine.RenderInstance.RunWindow();
 
         Log.Info("Shutting down!");
     }
