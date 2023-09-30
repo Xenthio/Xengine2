@@ -23,7 +23,7 @@ public abstract class SceneObject
                 fixed (float* buf = Model.Vertices)
                     GameRenderer.GL.BufferData(BufferTargetARB.ArrayBuffer, (nuint) (Model.Vertices.Length * sizeof(float)), buf, BufferUsageARB.DynamicDraw);
                 fixed (uint* buf = Model.Indices)
-                     GameRenderer.GL.BufferData(BufferTargetARB.ElementArrayBuffer, (nuint) (Model.Indices.Length * sizeof(uint)), buf, BufferUsageARB.DynamicDraw);
+                    GameRenderer.GL.BufferData(BufferTargetARB.ElementArrayBuffer, (nuint) (Model.Indices.Length * sizeof(uint)), buf, BufferUsageARB.DynamicDraw);
    
         }
     }

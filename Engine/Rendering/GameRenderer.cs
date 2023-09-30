@@ -38,10 +38,10 @@ public partial class GameRenderer
         GL.BindVertexArray(VertexArrayObject);
 
         VertexBufferObject = GL.GenBuffer();
-        GL.BindBuffer(GLEnum.ArrayBuffer, VertexBufferObject);
+        GL.BindBuffer(BufferTargetARB.ArrayBuffer, VertexBufferObject);
 
         ElementBufferObject = GL.GenBuffer();
-        GL.BindBuffer(GLEnum.ElementArrayBuffer, ElementBufferObject);
+        GL.BindBuffer(BufferTargetARB.ElementArrayBuffer, ElementBufferObject);
 
         CompileShaders();
 
@@ -80,9 +80,18 @@ public partial class GameRenderer
         if (lStatus != (int) GLEnum.True)
             throw new Exception("[ShaderCompiler] Shader Program failed to link: " + GL.GetProgramInfoLog(ShaderProgram));
     }
+    uint positionLoc = 0;
+
     public void RenderAll()
     {   
         GL.ClearColor(Color.Blue);
+        
+        GL.EnableVertexAttribArray(positionLoc);
+        unsafe {
+            GL.VertexAttribPointer(positionLoc, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), (void*) 0);
+        }
+
+        GL.Clear(ClearBufferMask.ColorBufferBit);
         GL.BindVertexArray(VertexArrayObject);
         GL.UseProgram(ShaderProgram);
         GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
