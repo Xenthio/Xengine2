@@ -55,16 +55,17 @@ public static partial class Xengine
         Input.SetupInput();
     }
 
-    static Action FrameEvents;
+    internal static Action FrameEvents;
 
-    static Action InputEvents;
+    internal static Action InputEvents;
 
-    static Action TickEvents;
+    internal static Action TickEvents;
     static public void OnFrame(double deltaTime) 
     {
         //Do Render Shite
         FrameEvents?.Invoke();
         GameManager.Frame();
+        RenderInstance.RenderAll();
     }
     static public void OnTick(double deltaTime)
     {
@@ -81,6 +82,7 @@ public static partial class Xengine
     {
         // Setup Input
         SetupInput();
+        RenderInstance.InitialiseGL();
     }
     
 }

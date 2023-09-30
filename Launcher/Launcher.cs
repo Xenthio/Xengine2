@@ -15,6 +15,7 @@ internal class Launcher
         // Load game assembly
         Xengine.GameInitialise("Game");
         Xengine.BindGameEvents();
+        
         //Xengine.RenderInstance.GameWindow.UpdatesPerSecond = Xengine.TicksPerSecond;
 
         // Setup Engine loop

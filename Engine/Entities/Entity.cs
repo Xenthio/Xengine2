@@ -1,19 +1,19 @@
+using Render;
+
 namespace Engine;
 
 
-public abstract class AbstractEntity
+public abstract class AbstractEntity : SceneObject
 {
-    public AbstractEntity()
-    {
 
-    }
 }
+public class Entity : AbstractEntity 
+{
 
-public class Entity : AbstractEntity {
     public Entity() {
 
     }
     public virtual void Spawn() {
 
     }
-}
+} 
