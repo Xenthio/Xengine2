@@ -1,6 +1,6 @@
 ﻿namespace Game;
 using Engine;
-using Silk.NET.Input;
+using Silk.NET.Input; 
 
 public class GameManager : IGame
 {
@@ -11,7 +11,8 @@ public class GameManager : IGame
         Cube.Model = new Model();
     }
 
-    public void Frame() 
+    Angles CameraAngles = new Angles(0, 0, 0);
+	public void Frame() 
     {
 
 
@@ -42,24 +43,18 @@ public class GameManager : IGame
             { 
                 Camera.Position += Speed * Vector3.Down;
             }
-            
-            if (Input.Down(Key.Left))
-            { 
-                Camera.Rotation *= Rotation.FromAngles(0,0,0.5f * Time.Delta);
-            }
-            
-            if (Input.Down(Key.Right))
-            { 
-                Camera.Rotation *= Rotation.FromAngles(0,0,-0.5f * Time.Delta);
-            
-            } 
-    }
+             CameraAngles.Pitch += Input.MouseDelta.Y * 0.001f;
+             CameraAngles.Yaw += Input.MouseDelta.X * -0.001f;
+
+			Camera.Rotation =  Rotation.FromAngles(CameraAngles);
+
+	}
 
     public void Tick() 
     {
             
             
-            Cube.Position = new Vector3(0,0,-1.5f);
+            Cube.Position = new Vector3(0,-1.5f,0);
 
             Log.Info(Camera.Position.ToString());
             

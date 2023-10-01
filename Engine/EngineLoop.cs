@@ -61,7 +61,7 @@ public static partial class Xengine
     internal static Action TickEvents;
     static public void OnFrame(double deltaTime) 
     {
-
+        OnInput();
         Time.Delta = (float)deltaTime;
         //Do Render Shite
         FrameEvents?.Invoke();
@@ -76,6 +76,7 @@ public static partial class Xengine
     }
     static public void OnInput()
     {
+        Input.BuildInput();
         InputEvents?.Invoke();
         GameManager.BuildInput();
     }

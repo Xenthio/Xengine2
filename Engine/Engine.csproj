@@ -1,8 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\Render\Render.csproj" />
-  </ItemGroup>
+ 
 
   <ItemGroup>
     <PackageReference Include="Silk.NET" Version="2.17.1" />

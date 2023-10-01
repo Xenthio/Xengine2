@@ -15,14 +15,22 @@ public class Vector3
     public float x;
     public float y;
     public float z;
+	/*
     public static Vector3 Forward => new Vector3(1,0,0);
     public static Vector3 Backwards => new Vector3(-1,0,0);
     public static Vector3 Left => new Vector3(0,1,0);
     public static Vector3 Right => new Vector3(0,-1,0);
     public static Vector3 Up => new Vector3(0,0,1);
     public static Vector3 Down => new Vector3(0,0,-1);
+    */
+	public static Vector3 Forward => new Vector3(0, 0, 1);
+	public static Vector3 Backwards => new Vector3(0, 0, -1);
+	public static Vector3 Left => new Vector3(1, 0, 0);
+	public static Vector3 Right => new Vector3(-1, 0, 0);
+	public static Vector3 Up => new Vector3(0, 1, 0);
+	public static Vector3 Down => new Vector3(0, -1, 0);
 
-    public Vector3(float X, float Y, float Z)
+	public Vector3(float X, float Y, float Z)
     {
         x = X;
         y = Y;

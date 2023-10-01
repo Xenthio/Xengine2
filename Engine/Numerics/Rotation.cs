@@ -32,7 +32,7 @@ public class Rotation
     }
     public Rotation RotateAroundAxis(Vector3 axis, float angle)
     {
-        return new Rotation(quat * Quaternion.CreateFromAxisAngle(axis,angle));
+        return new Rotation( Quaternion.CreateFromAxisAngle(axis,angle) * quat);
     }
     public static Rotation FromAngles(Angles angles)
     {

@@ -98,9 +98,13 @@ public partial class GameRenderer
 
         //setup camera
 
-        
-        var view = Matrix4x4.CreateLookAt(Camera.Position, Camera.Position + Camera.Rotation.Forward, Camera.Rotation.Up);
-        var projection = Matrix4x4.CreatePerspectiveFieldOfView(DegToRad(90), 16 / 9, 0.1f, 100f);
+
+        //var view = Matrix4x4.CreateLookAt(Camera.Position, Camera.Position + Camera.Rotation.Forward, Camera.Rotation.Up);
+        //var view = Matrix4x4.CreateLookTo(Camera.Position, Camera.Position + Camera.Rotation.Forward, Camera.Rotation.Up);
+        //var view = Matrix4x4.CreateTranslation(Camera.Position) * Matrix4x4.CreateFromQuaternion(Camera.Rotation.quat);
+		var view = Matrix4x4.CreateLookAt(Camera.Position, Camera.Position + Camera.Rotation.Forward, Camera.Rotation.Up);
+
+		var projection = Matrix4x4.CreatePerspectiveFieldOfView(DegToRad(80), 16f / 9f, 0.1f, 100f);
 
 
             
