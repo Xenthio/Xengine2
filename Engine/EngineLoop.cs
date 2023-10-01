@@ -30,7 +30,6 @@ public static partial class Xengine
         }
         GameManager.Initialise();
     }
-
     public static void BindGameEvents() {
         foreach (var type in GameAssembly.GetTypes()) 
         {
@@ -62,6 +61,8 @@ public static partial class Xengine
     internal static Action TickEvents;
     static public void OnFrame(double deltaTime) 
     {
+
+        Time.Delta = (float)deltaTime;
         //Do Render Shite
         FrameEvents?.Invoke();
         GameManager.Frame();
@@ -69,6 +70,7 @@ public static partial class Xengine
     }
     static public void OnTick(double deltaTime)
     {
+        Time.Delta = (float)deltaTime;
         TickEvents?.Invoke();
         GameManager.Tick();
     }

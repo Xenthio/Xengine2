@@ -26,6 +26,10 @@ public static class Input
 
     public static bool Down(Key key)
     {
+        for (int i = 0; i < Xengine.RenderInstance.Input.Keyboards.Count; i++)
+        {
+            if (Xengine.RenderInstance.Input.Keyboards[i].IsKeyPressed(key)) return true;
+        }
         return false;
     }
     public static bool Pressed(Key key)
