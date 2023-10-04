@@ -26,6 +26,11 @@ public static class Input
     static Vector2 _lastmousepos = new Vector2(0, 0);
 	public static void BuildInput()
 	{
+
+        for (int i = 0; i < Xengine.RenderInstance.Input.Mice.Count; i++)
+        {
+            Xengine.RenderInstance.Input.Mice[i].Cursor.CursorMode = LockMouse ? CursorMode.Raw : CursorMode.Normal;
+        }
 		Log.Info(MouseDelta.ToString());
 		MouseDelta = MousePosition - _lastmousepos;
 		_lastmousepos = Input.MousePosition;

@@ -27,10 +27,15 @@ public partial class GameRenderer
     {
         GameWindow = Window.Create(Options);
         Options.Title = windowName;
+        GameWindow.Resize += OnResize;
     }
     public void InitialiseInput()
     {
         Input = GameWindow.CreateInput();
+    }
+    public void OnResize(Vector2D<int> size)
+    {
+        //GL.GenFramebuffer();//.FramebufferSize = size;
     }
     public void InitialiseGL()
     {
@@ -103,8 +108,8 @@ public partial class GameRenderer
         //var view = Matrix4x4.CreateLookTo(Camera.Position, Camera.Position + Camera.Rotation.Forward, Camera.Rotation.Up);
         //var view = Matrix4x4.CreateTranslation(Camera.Position) * Matrix4x4.CreateFromQuaternion(Camera.Rotation.quat);
 		var view = Matrix4x4.CreateLookAt(Camera.Position, Camera.Position + Camera.Rotation.Forward, Camera.Rotation.Up);
-
-		var projection = Matrix4x4.CreatePerspectiveFieldOfView(DegToRad(80), 16f / 9f, 0.1f, 100f);
+         
+		var projection = Matrix4x4.CreatePerspectiveFieldOfView(DegToRad(80), (float)GameWindow.FramebufferSize.X / (float)GameWindow.FramebufferSize.Y, 0.1f, 100f);
 
 
             

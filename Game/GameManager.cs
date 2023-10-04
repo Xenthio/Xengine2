@@ -43,7 +43,13 @@ public class GameManager : IGame
             { 
                 Camera.Position += Speed * Vector3.Down;
             }
-             CameraAngles.Pitch += Input.MouseDelta.Y * 0.001f;
+
+		    if (Input.Down(Key.Escape))
+		    {
+			    Input.LockMouse = !Input.LockMouse;
+		    }
+
+		    CameraAngles.Pitch += Input.MouseDelta.Y * 0.001f;
              CameraAngles.Yaw += Input.MouseDelta.X * -0.001f;
 
 			Camera.Rotation =  Rotation.FromAngles(CameraAngles);
